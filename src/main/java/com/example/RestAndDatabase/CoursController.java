@@ -2,6 +2,8 @@ package com.example.RestAndDatabase;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +33,9 @@ public class CoursController {
     }
 
     @PostMapping("/cour")
-    public Cours newCours(@RequestBody Cours newCours) {
-        return repository.save(newCours);
+    public void newCours(@RequestBody Cours newCours, HttpServletResponse response) throws IOException {
+        repository.save(newCours);
+        response.getWriter().println(newCours.getId());
     }
 
     @PutMapping("/cour/{id}")

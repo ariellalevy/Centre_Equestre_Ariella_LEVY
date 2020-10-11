@@ -30,8 +30,11 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User newUser(@RequestBody User newUser) {
-        return repository.save(newUser);
+    public void newUser(@RequestBody User newUser, HttpServletResponse response) throws IOException {
+        repository.save(newUser);
+        String message = "Félicitation vous êtes inscris a l'adresse mail suivante: " + newUser.getEmail() + " votre mot de passe par default est: " + newUser.getPassword() + " pour une meilleur sécurité nous vous conseillons de le changer";
+        SendEmail.sendingEmail(newUser.getEmail(), "Inscription", message);
+        response.getWriter().println(newUser.getId());
     }
 
     @PutMapping("/user/{id}")
@@ -39,12 +42,21 @@ public class UserController {
 
         return repository.findById(id)
                 .map(user -> {
-                    user.setFirstName(newUser.getFirstName());
-                    user.setLastName(newUser.getLastName());
-                    user.setEmail(newUser.getEmail());
-                    user.setPassword(newUser.getPassword());
-                    user.setPhoneNumber(newUser.getPhoneNumber());
-                    user.setLicenceNumber(newUser.getLicenceNumber());
+                    if(newUser.getFirstName()!=null){
+                        user.setFirstName(newUser.getFirstName());
+                    }if(newUser.getLastName()!=null){
+                        user.setLastName(newUser.getLastName());
+                    }if(newUser.getEmail()!=null){
+                        user.setEmail(newUser.getEmail());
+                    }if(newUser.getPassword()!=null){
+                        user.setPassword(newUser.getPassword());
+                    }if(newUser.getPhoneNumber()!=null){
+                        user.setPhoneNumber(newUser.getPhoneNumber());
+                    }if(newUser.getLicenceNumber()!=null){
+                        user.setLicenceNumber(newUser.getLicenceNumber());
+                    }if(newUser.getRole()!=null){
+                        user.setRole(newUser.getRole());
+                    }
                     return repository.save(user);
                 })
                 .orElseGet(() -> {

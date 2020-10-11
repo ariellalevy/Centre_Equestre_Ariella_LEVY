@@ -97,4 +97,8 @@ public class User {
     public void setLicenceNumber(String licenceNumber) {
         this.licenceNumber = licenceNumber;
     }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

@@ -2,6 +2,8 @@ package com.example.RestAndDatabase;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -25,8 +27,9 @@ public class ChevalController {
     }
 
     @PostMapping("/cheval")
-    public Cheval newCheval(@RequestBody Cheval newCheval) {
-        return repository.save(newCheval);
+    public void newCheval(@RequestBody Cheval newCheval, HttpServletResponse response) throws IOException {
+        repository.save(newCheval);
+        response.getWriter().println(newCheval.getId());
     }
 
     @PutMapping("/cheval/{id}")
