@@ -13,26 +13,28 @@ public class Cours {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String titre;
-    private Date dateCours;
+    private String dateCours;
     private String horaire;
     private long nbrCavalier;
     private int niveau;
+    private String moniteur;
 
     protected Cours() {}
 
-    public Cours(String titre, Date dateCours, String horaire, long nbrCavalier, int niveau) {
+    public Cours(String titre, String dateCours, String horaire, long nbrCavalier, int niveau, String moniteur) {
         this.titre = titre;
         this.dateCours = dateCours;
         this.horaire = horaire;
         this.nbrCavalier = nbrCavalier;
         this.niveau = niveau;
+        this.moniteur = moniteur;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Customer[id=%d, titre='%s', dateCours='%d', horaire='%s', nbrCavalier='%d', niveau='%d']",
-                id, titre, dateCours, horaire, nbrCavalier, niveau);
+                "Customer[id=%d, titre='%s', dateCours='%s', horaire='%s', nbrCavalier='%d', niveau='%d', idMoniteur='%s']",
+                id, titre, dateCours, horaire, nbrCavalier, niveau, moniteur);
     }
 
     public void setId(Long id) {
@@ -43,7 +45,7 @@ public class Cours {
         this.titre = titre;
     }
 
-    public void setDateCours(Date dateCours) {
+    public void setDateCours(String dateCours) {
         this.dateCours = dateCours;
     }
 
@@ -59,6 +61,10 @@ public class Cours {
         this.niveau = niveau;
     }
 
+    public void setMoniteur(String moniteur) {
+        this.moniteur = moniteur;
+    }
+
     public Long getId() {
         return id;
     }
@@ -67,7 +73,7 @@ public class Cours {
         return titre;
     }
 
-    public Date getDateCours() {
+    public String getDateCours() {
         return dateCours;
     }
 
@@ -81,5 +87,9 @@ public class Cours {
 
     public int getNiveau() {
         return niveau;
+    }
+
+    public String getMoniteur() {
+        return moniteur;
     }
 }
