@@ -35,11 +35,18 @@ public class MainApplication {
     }
 
     @Bean
-    public CommandLineRunner demoCour(CoursRepository repository) {
+    public CommandLineRunner demoCours(CoursRepository repository) {
         return (args) -> {
-            // save a few cheval
-            SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
-            repository.save(new Cours("Cour debutant", DateFor.parse("2020-10-20"), "13h-14h30", 10, 1));
+            // save a few cours
+            repository.save(new Cours("Cour debutant", "2020-10-20", "13h-14h30", 10, 1, "Laurent Dupont"));
+        };
+    }
+
+    @Bean
+    public CommandLineRunner demoCour(CourRepository repository) {
+        return (args) -> {
+            // save a few cours
+            repository.save(new Cour(1, "Laurent Dupont", "Emma Bertier", "kafir"));
         };
     }
 }

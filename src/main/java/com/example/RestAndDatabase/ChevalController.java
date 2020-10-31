@@ -1,5 +1,6 @@
 package com.example.RestAndDatabase;
 
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -50,7 +51,11 @@ public class ChevalController {
     }
 
     @DeleteMapping("/cheval/{id}")
-    public void deleteCheval(@PathVariable Long id) {
+    public void deleteCheval(@PathVariable Long id, HttpServletResponse response) throws IOException {
         repository.deleteById(id);
+        JSONObject jo = new JSONObject();
+        jo.put("type", "deleteCheval");
+        jo.put("status", response.getStatus());
+        response.getWriter().println(jo.toString());
     }
 }

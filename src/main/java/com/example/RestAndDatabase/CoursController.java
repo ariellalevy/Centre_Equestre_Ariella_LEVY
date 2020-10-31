@@ -1,5 +1,6 @@
 package com.example.RestAndDatabase;
 
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,6 @@ public class CoursController {
 
     private CoursRepository repository;
     Long id = Long.valueOf(1);
-
     public CoursController(CoursRepository repository) {
         this.repository = repository;
     }
@@ -48,6 +48,7 @@ public class CoursController {
                     cour.setHoraire(newCours.getHoraire());
                     cour.setNbrCavalier(newCours.getNbrCavalier());
                     cour.setNiveau(newCours.getNiveau());
+                    cour.setMoniteur(newCours.getMoniteur());
                     return repository.save(cour);
                 })
                 .orElseGet(() -> {
@@ -57,7 +58,11 @@ public class CoursController {
     }
 
     @DeleteMapping("/cour/{id}")
-    public void deleteCours(@PathVariable Long id) {
+    public void deleteCours(@PathVariable Long id, HttpServletResponse response) throws IOException {
         repository.deleteById(id);
+        JSONObject jo = new JSONObject();
+        jo.put("type", "deleteCours");
+        jo.put("status", response.getStatus());
+        response.getWriter().println(jo.toString());
     }
 }
