@@ -1,10 +1,13 @@
 package com.example.RestAndDatabase;
 
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 
 @RestController
@@ -17,7 +20,7 @@ public class UserController {
         this.repository = repository;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public Iterable<User> Users(){
         return repository.findAll();
     }

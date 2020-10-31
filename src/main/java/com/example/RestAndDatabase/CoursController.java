@@ -32,6 +32,11 @@ public class CoursController {
         return repository.findByNiveau(niveau);
     }
 
+    @GetMapping ("/coursMoniteur")
+    public List<Cours> courListMoniteur(@RequestParam(value="moniteur") String moniteur) {
+        return repository.findByMoniteur(moniteur);
+    }
+
     @PostMapping("/cour")
     public void newCours(@RequestBody Cours newCours, HttpServletResponse response) throws IOException {
         repository.save(newCours);

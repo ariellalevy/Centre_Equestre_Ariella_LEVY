@@ -51,7 +51,5 @@ public class WebConfig implements Filter,WebMvcConfigurer {
                     "access-control-request-headers,access-control-request-method,accept,origin,authorization,x-requested-with,responseType,observe");
             response.setStatus(HttpServletResponse.SC_OK);
         }
-
     }
-
 }

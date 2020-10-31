@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CoursRepository extends CrudRepository<Cours, Long> {
 
-    List<Cours> findByTitre(String titre);
+    List<Cours> findByMoniteur(String moniteur);
 
     List<Cours> findByNiveau(int niveau);
 

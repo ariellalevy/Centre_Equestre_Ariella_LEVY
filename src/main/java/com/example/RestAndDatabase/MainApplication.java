@@ -7,8 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.text.SimpleDateFormat;
-
 @SpringBootApplication
 public class MainApplication {
 
@@ -38,15 +36,16 @@ public class MainApplication {
     public CommandLineRunner demoCours(CoursRepository repository) {
         return (args) -> {
             // save a few cours
-            repository.save(new Cours("Cour debutant", "2020-10-20", "13h-14h30", 10, 1, "Laurent Dupont"));
+            Cours cours = new Cours("Cour debutant", "2020-10-20", "13h-14h30", 10, 1, "Laurent Dupont");
+            repository.save(cours);
         };
     }
 
     @Bean
-    public CommandLineRunner demoCour(CourRepository repository) {
+    public CommandLineRunner demoCour(CavalierChevalRepository repository) {
         return (args) -> {
             // save a few cours
-            repository.save(new Cour(1, "Laurent Dupont", "Emma Bertier", "kafir"));
+            repository.save(new CavalierCheval(3, "Emma Bertier", "Kafir"));
         };
     }
 }

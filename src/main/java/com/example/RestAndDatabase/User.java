@@ -18,8 +18,19 @@ public class User {
     private String phoneNumber;
     private String licenceNumber;
     private String role;
+    private long balance;
 
     protected User() {}
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
+
+    private boolean isLoggedIn;
 
     public User(String firstName, String lastName, String email, String password, String phoneNumber, String licenceNumber, String role) {
         this.firstName = firstName;
@@ -29,6 +40,8 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.licenceNumber = licenceNumber;
         this.role = role;
+        this.balance = 100;
+        this.isLoggedIn = false;
     }
 
     @Override
@@ -68,6 +81,10 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    public long getBalance(){
+        return balance;
     }
 
     public void setId(Long id) {
