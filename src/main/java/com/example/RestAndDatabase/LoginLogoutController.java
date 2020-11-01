@@ -3,6 +3,7 @@ package com.example.RestAndDatabase;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Base64;
@@ -17,13 +18,21 @@ public class LoginLogoutController {
     }
 
     @PostMapping("/login")
-    public UserReponse connexion(@RequestBody User userLogin, HttpSession session) {
+    public UserReponse connexion(@RequestBody User userLogin, HttpSession session, HttpServletRequest request,
+                                 HttpServletRequest response) {
+
         UserReponse userReponse = new UserReponse(0,"login", "", null);
+
+        if((request.getAttribute("IsValidRequest")!= null) && request.getAttribute("IsValidRequest").equals("false")){
+            userReponse.setMessage("Invalid Request! Token Mismatch Error!");
+            return userReponse;
+        }
+
         if(session.isNew()){
             session.setMaxInactiveInterval(100);
             for (User user : repository.findAll()) {
-                if ((user.getEmail().equals(userLogin.getEmail())) || (user.getPhoneNumber().equals(userLogin.getPhoneNumber()))) {
-                    if (BCrypt.checkpw(new String(Base64.getDecoder().decode(userLogin.getPassword())), user.getPassword())) {
+                if ((user.getEmail().equals(userLogin.getEmail())) || (user.getPhoneNumber().equals(userLogin.getPhoneNumber())) || (user.getFirstName().equals(userLogin.getFirstName()))) {
+                    if (BCrypt.checkpw(userLogin.getPassword(), user.getPassword())) {
                         System.out.println("Valid Credentials");
                         if (!user.isLoggedIn()) {
                             user.setLoggedIn(true);
@@ -50,14 +59,31 @@ public class LoginLogoutController {
     }
 
     @GetMapping("/logout/{id}")
-    public String deconnexion(@PathVariable Long id, HttpSession session) {
-        if(session.isNew()){
+    public String deconnexion(@PathVariable Long id, HttpSession session, HttpServletRequest request) {
+
+        for(User user: repository.findAll()){
+            if(user.getId().equals(id)){
+                System.out.println(user.isLoggedIn());
+                if(user.isLoggedIn()) {
+                    user.setLoggedIn(false);
+                    repository.save(user);
+                }
+                else{
+                    return "User Not Logged In";
+                }
+            }
+        }
+        session.invalidate();
+        return "User Logged out Successfully";
+
+        /*if(session.isNew()){
             session.invalidate();
             return "User Not Logged In!!";
         }
         else{
             for(User user: repository.findAll()){
                 if(user.getId().equals(id)){
+                    System.out.println(user.isLoggedIn());
                     if(user.isLoggedIn()) {
                         user.setLoggedIn(false);
                         repository.save(user);
@@ -69,6 +95,6 @@ public class LoginLogoutController {
             }
             session.invalidate();
             return "User Logged out Successfully";
-        }
+        }*/
     }
 }
