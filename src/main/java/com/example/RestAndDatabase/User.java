@@ -19,18 +19,13 @@ public class User {
     private String licenceNumber;
     private String role;
     private long balance;
+    private boolean isLoggedIn;
 
     protected User() {}
 
     public boolean isLoggedIn() {
         return isLoggedIn;
     }
-
-    public void setLoggedIn(boolean loggedIn) {
-        isLoggedIn = loggedIn;
-    }
-
-    private boolean isLoggedIn;
 
     public User(String firstName, String lastName, String email, String password, String phoneNumber, String licenceNumber, String role) {
         this.firstName = firstName;
@@ -117,5 +112,9 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 }

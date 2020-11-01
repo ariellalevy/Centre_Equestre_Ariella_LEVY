@@ -20,7 +20,9 @@ public class MainApplication {
     public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
             // save a few customers
-            repository.save(new User("Administateur", "Admin","admin@gmail.com","password", "0130645539", "", "admin"));
+            repository.save(new User("Laurent", "Dupont","laurentdupont@gmail.com",Utility.hashPassword("password"), "0130645539", "", "moniteur"));
+            repository.save(new User("admin", "","",Utility.hashPassword("admin"), "", "", "SuperAdmin"));
+            repository.save(new User("Laeticia", "Levy","laeticialevy@gmail.com",Utility.hashPassword("password"), "0130645539", "", "admin"));
         };
     }
 

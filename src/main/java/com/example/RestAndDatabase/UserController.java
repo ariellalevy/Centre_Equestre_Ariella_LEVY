@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,7 +21,7 @@ public class UserController {
         this.repository = repository;
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("/users")
     public Iterable<User> Users(){
         return repository.findAll();
     }
@@ -28,6 +29,11 @@ public class UserController {
     @GetMapping("/user/{id}")
     public Optional<User> User(@PathVariable Long id){
         return repository.findById(id);
+    }
+
+    @GetMapping("/usersAdmin")
+    public List<User> listAdmin(){
+        return repository.findByRole("admin");
     }
 
     @PostMapping("/user")
