@@ -42,6 +42,7 @@ si vous souhaitez seulement utiliser le site sans regarder le code voila le lien
 ## Démo
 voici la démonstration de chacune des actions possibles
 * Action commun a chacun des rôles.
+![alt text](https://raw.githubusercontent.com/ariellalevy/ariellalevy.github.io/master/Acceuil.png)
 * Rôle "superAdmin"
 * Rôle "administateur"
 * Rôle "moniteur"
