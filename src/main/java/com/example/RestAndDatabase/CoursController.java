@@ -12,14 +12,22 @@ import java.util.Optional;
 public class CoursController {
 
     private CoursRepository repository;
+    private CavalierChevalRepository repositoryCavalierCheval;
     Long id = Long.valueOf(1);
-    public CoursController(CoursRepository repository) {
+    public CoursController(CoursRepository repository, CavalierChevalRepository repositoryCavalierCheval) {
         this.repository = repository;
+        this.repositoryCavalierCheval = repositoryCavalierCheval;
     }
 
     @GetMapping("/cours")
     public Iterable<Cours> cours(){
-        return repository.findAll();
+        Iterable<Cours> listCour = repository.findAll();
+        for (Cours cours : listCour){
+            if (Utility.calculeDate(cours.getDateCours())==true){
+                cours.setIs24before(true);
+            }
+        }
+        return listCour;
     }
 
     @GetMapping("/cour/{id}")
@@ -29,12 +37,24 @@ public class CoursController {
 
     @GetMapping ("/cour")
     public List<Cours> cour(@RequestParam(value="niveau") int niveau) {
-        return repository.findByNiveau(niveau);
+        List<Cours> listCour = repository.findByNiveau(niveau);
+        for (Cours cours : listCour){
+            if (Utility.calculeDate(cours.getDateCours())==true){
+                cours.setIs24before(true);
+            }
+        }
+        return listCour;
     }
 
     @GetMapping ("/coursMoniteur")
     public List<Cours> courListMoniteur(@RequestParam(value="moniteur") String moniteur) {
-        return repository.findByMoniteur(moniteur);
+        List<Cours> listCour = repository.findByMoniteur(moniteur);
+        for (Cours cours : listCour){
+            if (Utility.calculeDate(cours.getDateCours())==true){
+                cours.setIs24before(true);
+            }
+        }
+        return listCour;
     }
 
     @PostMapping("/cour")
@@ -64,6 +84,10 @@ public class CoursController {
 
     @DeleteMapping("/cour/{id}")
     public void deleteCours(@PathVariable Long id, HttpServletResponse response) throws IOException {
+        List<CavalierCheval> cavalierChevalList = repositoryCavalierCheval.findByIdCour(Math.toIntExact(id));
+        for(CavalierCheval cavalierCheval : cavalierChevalList){
+            repositoryCavalierCheval.delete(cavalierCheval);
+        }
         repository.deleteById(id);
         JSONObject jo = new JSONObject();
         jo.put("type", "deleteCours");

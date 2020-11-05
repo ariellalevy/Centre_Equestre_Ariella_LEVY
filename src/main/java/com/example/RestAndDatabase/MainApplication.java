@@ -21,8 +21,9 @@ public class MainApplication {
         return (args) -> {
             // save a few customers
             repository.save(new User("Laurent", "Dupont","laurentdupont@gmail.com",Utility.hashPassword("password"), "0130645539", "", "moniteur"));
-            repository.save(new User("admin", "","",Utility.hashPassword("admin"), "", "", "SuperAdmin"));
+            repository.save(new User("SuperAdmin", "","",Utility.hashPassword("admin"), "", "", "SuperAdmin"));
             repository.save(new User("Laeticia", "Levy","laeticialevy@gmail.com",Utility.hashPassword("password"), "0130645539", "", "admin"));
+            repository.save(new User("Ariella", "Levy","ariellalevy78@gmail.com",Utility.hashPassword("user"), "0623504047", "98765456789", "cavalier"));
         };
     }
 
@@ -38,7 +39,7 @@ public class MainApplication {
     public CommandLineRunner demoCours(CoursRepository repository) {
         return (args) -> {
             // save a few cours
-            Cours cours = new Cours("Cour debutant", "2020-10-20", "13h-14h30", 10, 1, "Laurent Dupont");
+            Cours cours = new Cours("Cour debutant", "2020-11-04", "13h-14h30", 10, 1, "Laurent Dupont", false,1);
             repository.save(cours);
         };
     }
@@ -47,7 +48,7 @@ public class MainApplication {
     public CommandLineRunner demoCour(CavalierChevalRepository repository) {
         return (args) -> {
             // save a few cours
-            repository.save(new CavalierCheval(3, "Emma Bertier", "Kafir"));
+            repository.save(new CavalierCheval(5, "Emma Bertier", "Kafir"));
         };
     }
 }
