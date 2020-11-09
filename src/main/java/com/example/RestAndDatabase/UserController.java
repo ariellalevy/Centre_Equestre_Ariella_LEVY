@@ -41,7 +41,7 @@ public class UserController {
         newUser.setPassword(Utility.hashPassword(newUser.getPassword()));
         repository.save(newUser);
         String message = "Félicitation vous êtes inscris a l'adresse mail suivante: " + newUser.getEmail() + " Si vous n'êtes pas le créateur du compte veuilliez cliquer sur ce lien: http://localhost:4200/password pour une changer le mot de passe.";
-        Utility.sendingEmail(newUser.getEmail(), "Inscription", message);
+        //Utility.sendingEmail(newUser.getEmail(), "Inscription", message);
         response.getWriter().println(newUser.getId());
     }
 
@@ -91,7 +91,7 @@ public class UserController {
     public void createPassword(@RequestParam(value="email") String email, HttpServletResponse response) throws IOException{
         User userPassword = repository.findByEmail(email);
         String message = "Vous avez fait une demande de mot de passe pour l'adresse mail suivante: " + userPassword.getEmail() + " cliquer sur ce lien : http://localhost:4200/password pour une changer le mot de passe";
-        Utility.sendingEmail(userPassword.getEmail(), "Demande de mot de passe", message);
+        //Utility.sendingEmail(userPassword.getEmail(), "Demande de mot de passe", message);
         response.getWriter().println(response.getStatus());
     }
 

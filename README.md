@@ -39,9 +39,15 @@ pour récupérer le code source il faut cloner le projet avec la commande suivan
     * [http://localhost:4200/](http://localhost:4200/)
 ## Lien du site
 si vous souhaitez seulement utiliser le site sans regarder le code voila le lien du site web: [lien](http://localhost:4200/)
+
+Il vous faudra aussi ajouter l'extension [CORS](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=fr) il faudra l'activé pour que le site fonctionne.
 ## Démo
 voici la démonstration de chacune des actions possibles
 * Action commun a chacun des rôles.
+    * Inscription
+
+    * mot de passe oublier
+    * recuperation de mot de passe
 ![alt text](https://raw.githubusercontent.com/ariellalevy/ariellalevy.github.io/master/Acceuil.png)
 * Rôle "superAdmin"
 * Rôle "administateur"
