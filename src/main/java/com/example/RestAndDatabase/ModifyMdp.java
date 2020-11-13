@@ -1,5 +1,7 @@
 package com.example.RestAndDatabase;
 
+import javax.persistence.Entity;
+
 public class ModifyMdp {
 
     private String email;

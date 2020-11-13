@@ -31,9 +31,11 @@ public class LoginLogoutController {
         if(session.isNew()){
             session.setMaxInactiveInterval(100);
             for (User user : repository.findAll()) {
-                if ((user.getEmail().equals(userLogin.getEmail())) || (user.getPhoneNumber().equals(userLogin.getPhoneNumber())) || (user.getFirstName().equals(userLogin.getFirstName()))) {
+                if (((user.getEmail().equals(userLogin.getEmail())) && (userLogin.getEmail() != ""))
+                        || ((user.getPhoneNumber().equals(userLogin.getPhoneNumber())) && (userLogin.getPhoneNumber() != ""))
+                        || ((user.getFirstName().equals("SuperAdmin")) && (userLogin.getFirstName() != ""))) {
+                    System.out.println(user);
                     if (BCrypt.checkpw(userLogin.getPassword(), user.getPassword())) {
-                        System.out.println("Valid Credentials");
                         if (!user.isLoggedIn()) {
                             user.setLoggedIn(true);
                             repository.save(user);

@@ -32,7 +32,6 @@ public class Utility {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", "587");
-
         // Get the Session object
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -67,35 +66,17 @@ public class Utility {
     }
 
 
-    public static void calculeDate(String date){
+    public static boolean calculeDate(String date){
         int jour = Integer.parseInt(date.substring(8));
         int mois = Integer.parseInt(date.substring(5,7));
         int annee = Integer.parseInt(date.substring(0,4));
         Date dateCurrent = new Date();
-        if((dateCurrent.getDate() == (jour-1)) && (dateCurrent.getMonth()==(mois-1)) && (dateCurrent.getYear()==(annee-1900))){
-            sendingEmail("ariellalevy78@gmail.com", "Vous avez bientot cours", "Bonjour<br> nous sommes la veille du cours nous vous inviter a asigner les chevaux au cavalier.");
+        if(((dateCurrent.getDate() == (jour-1)) && ((dateCurrent.getMonth()+1)==mois) && ((dateCurrent.getYear()+1900)==annee))
+                || ((dateCurrent.getDate() == (jour)) && ((dateCurrent.getMonth()+1)==mois) && ((dateCurrent.getYear()+1900)==annee))){
+            return true;
+        }else{
+            return false;
         }
-    }
-
-    public static void main(String[] args) {
-
-        //calculeDate("2020-10-1");
-
-        String password = "12345";
-        // Hashage d'un mot de passe
-        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-
-        // Il est possible d'augmenter la complexité (et donc le temps
-        // de traitement) en passant le "workfactor" en paramètre
-        // ici : 12 La valeur par défaut est 10
-        hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
-
-        String candidate = "123456";
-        // Vérification d'un mot de passe à partir du hash
-        if (BCrypt.checkpw(candidate, hashed))
-            System.out.println("It matches");
-        else
-            System.out.println("It does not match");
     }
 
     public static String hashPassword(String password){

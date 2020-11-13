@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CavalierChevalController {
@@ -36,8 +37,20 @@ public class CavalierChevalController {
 
     @PostMapping("/addCavalierCheval")
     public void addCavalierCheval(@RequestBody CavalierCheval cavalierCheval, HttpServletResponse response) throws IOException {
-        repository.save(cavalierCheval);
-        response.getWriter().println(cavalierCheval.getId());
+        Cours cour = coursRepository.findById(cavalierCheval.getIdCour());
+        if(cour.getCompteurNbrCavalier() == cour.getNbrCavalier()){
+            response.getWriter().println("error le cour est complet");
+        }else{
+            repository.save(cavalierCheval);
+            cour.setCompteurNbrCavalier(cour.getCompteurNbrCavalier()+1);
+            coursRepository.save(cour);
+            response.getWriter().println(cavalierCheval.getId());
+        }
+    }
+
+    @GetMapping ("/listCavalierChevalByIdCour")
+    public List<CavalierCheval> listCavalierChevalByIdCour(@RequestParam(value="idCour") int idCour) {
+        return repository.findByIdCour(idCour);
     }
 
     @PutMapping("/addCheval/{id}")
@@ -56,6 +69,10 @@ public class CavalierChevalController {
 
     @DeleteMapping("/deleteCavalierCheval/{id}")
     public void deleteCavalierCheval(@PathVariable Long id, HttpServletResponse response) throws IOException {
+        CavalierCheval cavalierChevalSuppr = repository.findById(id).get();
+        Cours cour = coursRepository.findById(cavalierChevalSuppr.getIdCour());
+        cour.setCompteurNbrCavalier(cour.getCompteurNbrCavalier()-1);
+        coursRepository.save(cour);
         repository.deleteById(id);
         JSONObject jo = new JSONObject();
         jo.put("type", "deleteCavalierCheval");
