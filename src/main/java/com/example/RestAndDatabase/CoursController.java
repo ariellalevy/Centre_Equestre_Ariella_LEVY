@@ -68,12 +68,19 @@ public class CoursController {
 
         return repository.findById(id)
                 .map(cour -> {
-                    cour.setTitre(newCours.getTitre());
-                    cour.setDateCours(newCours.getDateCours());
-                    cour.setHoraire(newCours.getHoraire());
-                    cour.setNbrCavalier(newCours.getNbrCavalier());
-                    cour.setNiveau(newCours.getNiveau());
-                    cour.setMoniteur(newCours.getMoniteur());
+                    if(newCours.getTitre()!=null){
+                        cour.setTitre(newCours.getTitre());
+                    }if(newCours.getDateCours()!=null){
+                        cour.setDateCours(newCours.getDateCours());
+                    }if(newCours.getHoraire()!=null){
+                        cour.setHoraire(newCours.getHoraire());
+                    }if(newCours.getNbrCavalier()!=0){
+                        cour.setNbrCavalier(newCours.getNbrCavalier());
+                    }if(newCours.getNiveau()!=0){
+                        cour.setNiveau(newCours.getNiveau());
+                    }if(newCours.getMoniteur()!=null){
+                        cour.setMoniteur(newCours.getMoniteur());
+                    }
                     return repository.save(cour);
                 })
                 .orElseGet(() -> {

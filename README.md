@@ -35,21 +35,51 @@ pour récupérer le code source il faut cloner le projet avec la commande suivan
 1. Installation du dossier node module suivre les commandes
     * `cd Centre-Equestre-GUI`
     * `npm install`
-    * `ng serve`
-    * [http://localhost:4200/](http://localhost:4200/)
+    * changer dans le fichier src/asset/config.json 51.15.243.169 par localhost
+    * `ng serve --ssl=true` ou `npm start`
+    * [https://localhost:4200/](https://localhost:4200/)
 ## Lien du site
-si vous souhaitez seulement utiliser le site sans regarder le code voila le lien du site web: [lien](http://localhost:4200/)
+si vous souhaitez seulement utiliser le site sans regarder le code voila le lien du site web: [lien](https://centre-equestre-gui.vercel.app/principal)
 
 Il vous faudra aussi ajouter l'extension [CORS](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=fr) il faudra l'activé pour que le site fonctionne.
+
+Malheuresement je n'ai pas reussi a gérer l'envoie de mail pour le déploiement donc dans le liens ci dessus il n'y a pas donc pas d'envoie d'email **mais** en local cela fonctionne.
+
 ## Démo
-voici la démonstration de chacune des actions possibles
+voici la démonstration de chacune des actions possibles. Pour touver les videos cliquer sur ce [lien](https://etesiea-my.sharepoint.com/:f:/g/personal/levy_et_esiea_fr/EgzPY4C8QLdAijTiFEwQNrIBt3tNURUvs6yMEzbLZRkaRQ?e=0jjb9w)
+
 * Action commun a chacun des rôles.
     * Inscription
-
+        * Dossier capture video: CentreEquestreInscription.mp4
     * mot de passe oublier
+        * Dossier capture video: CentreEquestreDemandeDeMdp.mp4
     * recuperation de mot de passe
-![alt text](https://raw.githubusercontent.com/ariellalevy/ariellalevy.github.io/master/Acceuil.png)
-* Rôle "superAdmin"
+        * Dossier capture video: CentreEquestreRecuperationMdp.mp4
+    * Information utilisateur (modification d'informations & modification de mot de passe)
+        * Dossier capture video: CentreEquestreInformationUser.mp4
+* Action commun au role "administateur", "moniteur" et "cavalier"
+    * Dossier capture video: CentreEquestreConnexionDeconnexion.mp4
+* Rôle "superAdmin": les credentials defini par defaut sont id:SuperAdmin mdp:admin
+    * connexion SuperAdmin
+        * Dossier capture video: CentreEquestreSuperAdminConnexion.mp4
+    * list des utlisateur
+        * Dossier capture video: CentreEquestreSuperAdminList.mp4
+    * création des administateurs
+        * Dossier capture video: CentreEquestreSuperAdminCreation.mp4
+
+nb: pour se connecter au superAdmin il faut cliquer sur l'icone cavalier dans la page de connexion :-)
 * Rôle "administateur"
+    * Gestion des chevaux:
+        * Dossier capture video: CentreEquestreAdministrateurChaval.mp4
+    * Gestion des utilisateur:
+        * Dossier capture video: CentreEquestreAdministrateurUtilisateur.mp4
 * Rôle "moniteur"
+    * Gestion des Cours:
+        * Dossier capture video: CentreEquestreMoniteurCour.mp4
+    * Planning:
+        * Dossier capture video: CentreEquestreMoniteurPlanning.mp4
 * Role "cavalier"
+    * S'inscrire a un cour
+        * Dossier capture video: CentreEquestreCavalierInscriptionCour.mp4
+    * visualiser son planning de cour
+        * Dossier capture video: CentreEquestreCavalierPlanningCours.mp4

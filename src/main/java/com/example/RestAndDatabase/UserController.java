@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,14 @@ public class UserController {
         return repository.findById(id);
     }
 
+    @GetMapping("/usersMoniteurCavalier")
+    public List<User> listMoniteurCavalier(){
+        List<User> users = new ArrayList<User>();
+        users.addAll(repository.findByRole("moniteur"));
+        users.addAll(repository.findByRole("cavalier"));
+        return users;
+    }
+
     @GetMapping("/usersAdmin")
     public List<User> listAdmin(){
         return repository.findByRole("admin");
@@ -41,7 +50,7 @@ public class UserController {
         newUser.setPassword(Utility.hashPassword(newUser.getPassword()));
         repository.save(newUser);
         String message = "Félicitation vous êtes inscris a l'adresse mail suivante: " + newUser.getEmail() + " Si vous n'êtes pas le créateur du compte veuilliez cliquer sur ce lien: http://localhost:4200/password pour une changer le mot de passe.";
-        //Utility.sendingEmail(newUser.getEmail(), "Inscription", message);
+        Utility.sendingEmail(newUser.getEmail(), "Inscription", message);
         response.getWriter().println(newUser.getId());
     }
 
@@ -89,25 +98,30 @@ public class UserController {
 
     @GetMapping ("/getNewPassword")
     public void createPassword(@RequestParam(value="email") String email, HttpServletResponse response) throws IOException{
+        System.out.println(repository.findByEmail(email));
         User userPassword = repository.findByEmail(email);
-        String message = "Vous avez fait une demande de mot de passe pour l'adresse mail suivante: " + userPassword.getEmail() + " cliquer sur ce lien : http://localhost:4200/password pour une changer le mot de passe";
-        //Utility.sendingEmail(userPassword.getEmail(), "Demande de mot de passe", message);
+        String message = "Vous avez fait une demande de mot de passe pour l'adresse mail suivante: " + userPassword.getEmail() + " cliquer sur ce lien : https://localhost:4200/password pour une changer le mot de passe";
+        Utility.sendingEmail(userPassword.getEmail(), "Demande de mot de passe", message);
         response.getWriter().println(response.getStatus());
     }
 
-    @PutMapping("/modifyMdp")
-    public User modifyMdp(@RequestBody ModifyMdp modifyMdp) {
-        User userPassword = repository.findByEmail(modifyMdp.getEmail());
-        return repository.findById(userPassword.getId())
-                .map(user -> {
-                    if(userPassword.getPassword()!=null){
-                        user.setPassword(Utility.hashPassword(userPassword.getPassword()));
-                    }
-                    return repository.save(user);
-                })
-                .orElseGet(() -> {
-                    userPassword.setId(id);
-                    return repository.save(userPassword);
-                });
+    @GetMapping("/modifyMdp")
+    public User modifyMdp(@RequestParam(value="email") String email,@RequestParam(value="password") String password, @RequestParam(value="passwordConfirm") String passwordConfirm) {
+        if(password.equals(passwordConfirm)){
+            User userPassword = repository.findByEmail(email);
+            return repository.findById(userPassword.getId())
+                    .map(user -> {
+                        if(userPassword.getPassword()!=null){
+                            System.out.println(password);
+                            user.setPassword(Utility.hashPassword(password));
+                        }
+                        return repository.save(user);
+                    })
+                    .orElseGet(() -> {
+                        userPassword.setId(id);
+                        return repository.save(userPassword);
+                    });
+        }
+        return null;
     }
 }

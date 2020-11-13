@@ -48,7 +48,7 @@ public class MainApplication {
     public CommandLineRunner demoCour(CavalierChevalRepository repository) {
         return (args) -> {
             // save a few cours
-            repository.save(new CavalierCheval(5, "Emma Bertier", "Kafir"));
+            repository.save(new CavalierCheval(6, "Emma Bertier", "Kafir"));
         };
     }
 }
